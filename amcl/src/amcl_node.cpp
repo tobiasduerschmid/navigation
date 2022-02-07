@@ -285,6 +285,7 @@ void sigintHandler(int sig)
 int
 main(int argc, char** argv)
 {
+  ROS_DEBUG("ROSTIMER. Start main: %f", ros::WallTime::now());
   ros::init(argc, argv, "amcl");
   ros::NodeHandle nh;
 
@@ -308,6 +309,7 @@ main(int argc, char** argv)
   amcl_node_ptr.reset();
 
   // To quote Morgan, Hooray!
+  ROS_DEBUG("ROSTIMER. End main: %f", ros::WallTime::now());
   return(0);
 }
 
