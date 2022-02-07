@@ -285,7 +285,7 @@ void sigintHandler(int sig)
 int
 main(int argc, char** argv)
 {
-  ROS_ERROR("ROSTIMER (amcl). Start main: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start main: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
   ros::init(argc, argv, "amcl");
   ros::NodeHandle nh;
 
@@ -309,7 +309,7 @@ main(int argc, char** argv)
   amcl_node_ptr.reset();
 
   // To quote Morgan, Hooray!
-  ROS_ERROR("ROSTIMER (amcl). End main: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End main: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
   return(0);
 }
 
@@ -786,7 +786,7 @@ AmclNode::requestMap()
 void
 AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
 {
-  ROS_ERROR("ROSTIMER (amcl). Start mapReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start mapReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
   if( first_map_only_ && first_map_received_ ) {
     return;
   }
@@ -794,7 +794,7 @@ AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
   handleMapMessage( *msg );
 
   first_map_received_ = true;
-  ROS_ERROR("ROSTIMER (amcl). End mapReceived:%f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End mapReceived:%f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
 }
 
 void
@@ -1047,10 +1047,10 @@ AmclNode::setMapCallback(nav_msgs::SetMap::Request& req,
 void
 AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
 {
-  ROS_ERROR("ROSTIMER (amcl). Start laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+  ROS_ERROR("ROSTIMER (amcl). Start laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
   last_laser_received_ts_ = ros::Time::now();
   if( map_ == NULL ) {
-    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
     return;
   }
   boost::recursive_mutex::scoped_lock lr(configuration_mutex_);
@@ -1078,7 +1078,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
                 "even though the message notifier is in use",
                 laser_scan->header.frame_id.c_str(),
                 base_frame_id_.c_str());
-      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
       return;
     }
 
@@ -1105,7 +1105,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
                   laser_scan->header.stamp, base_frame_id_))
   {
     ROS_ERROR("Couldn't determine robot's pose associated with laser scan");
-    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
     return;
   }
 
@@ -1198,7 +1198,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
     {
       ROS_WARN("Unable to transform min/max laser angles into base frame: %s",
                e.what());
-      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());                
+      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());                
       return;
     }
 
@@ -1375,7 +1375,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
       catch(tf::TransformException)
       {
         ROS_DEBUG("Failed to subtract base to odom transform");
-        ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+        ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
         return;
       }
 
@@ -1424,7 +1424,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
       save_pose_last_time = now;
     }
   }
-  ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+  ROS_ERROR("ROSTIMER (amcl). End laserReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
 
 }
 
@@ -1439,9 +1439,9 @@ AmclNode::getYaw(tf::Pose& t)
 void
 AmclNode::initialPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg)
 {
-  ROS_ERROR("ROSTIMER (amcl). Start initialPoseReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start initialPoseReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
   handleInitialPoseMessage(*msg);
-  ROS_ERROR("ROSTIMER (amcl). End initialPoseReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End initialPoseReceived: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
 }
 
 void

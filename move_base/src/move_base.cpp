@@ -262,14 +262,14 @@ namespace move_base {
   }
 
   void MoveBase::goalCB(const geometry_msgs::PoseStamped::ConstPtr& goal){
-    ROS_ERROR("ROSTIMER (move_base). Start goalCB: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+    ROS_ERROR("ROSTIMER (move_base). Start goalCB: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
     ROS_DEBUG_NAMED("move_base","In ROS goal callback, wrapping the PoseStamped in the action message and re-sending to the server.");
     move_base_msgs::MoveBaseActionGoal action_goal;
     action_goal.header.stamp = ros::Time::now();
     action_goal.goal.target_pose = *goal;
 
     action_goal_pub_.publish(action_goal);
-    ROS_ERROR("ROSTIMER (move_base). End goalCB: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+    ROS_ERROR("ROSTIMER (move_base). End goalCB: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
   }
 
   void MoveBase::clearCostmapWindows(double size_x, double size_y){
@@ -767,9 +767,9 @@ namespace move_base {
       ros::WallDuration t_diff = ros::WallTime::now() - start;
       ROS_DEBUG_NAMED("move_base","Full control cycle time: %.9f\n", t_diff.toSec());
 
-      ROS_ERROR("ROSTIMER (move_base). Sleep executeCb: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+      ROS_ERROR("ROSTIMER (move_base). Sleep executeCb: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
       r.sleep();
-      ROS_ERROR("ROSTIMER (move_base). Wake executeCb: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()); 
+      ROS_ERROR("ROSTIMER (move_base). Wake executeCb: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec()); 
       //make sure to sleep for the remainder of our cycle time
       if(r.cycleTime() > ros::Duration(1 / controller_frequency_) && state_ == CONTROLLING)
         ROS_WARN("Control loop missed its desired rate of %.4fHz... the loop actually took %.4f seconds", controller_frequency_, r.cycleTime().toSec());
