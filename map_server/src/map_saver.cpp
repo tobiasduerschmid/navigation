@@ -54,7 +54,7 @@ class MapGenerator
 
     void mapCallback(const nav_msgs::OccupancyGridConstPtr& map)
     {
-      ROS_ERROR("ROSTIMER (map_saver). Start mapCallback: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+      ROS_ERROR("ROSTIMER (map_saver). Start mapCallback: %lu", ros::WallTime::now().toNSec());
       ROS_INFO("Received a %d X %d map @ %.3f m/pix",
                map->info.width,
                map->info.height,
@@ -67,7 +67,7 @@ class MapGenerator
       if (!out)
       {
         ROS_ERROR("Couldn't save map file to %s", mapdatafile.c_str());
-        ROS_ERROR("ROSTIMER (map_saver). End mapCallback: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+        ROS_ERROR("ROSTIMER (map_saver). End mapCallback: %lu", ros::WallTime::now().toNSec());
         return;
       }
 
@@ -121,7 +121,7 @@ free_thresh: 0.196
 
       ROS_INFO("Done\n");
       saved_map_ = true;
-      ROS_ERROR("ROSTIMER (map_saver). End mapCallback: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+      ROS_ERROR("ROSTIMER (map_saver). End mapCallback: %lu", ros::WallTime::now().toNSec());
     }
 
     std::string mapname_;
@@ -138,7 +138,7 @@ free_thresh: 0.196
 
 int main(int argc, char** argv)
 {
-  ROS_ERROR("ROSTIMER (map_saver). Start main: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (map_saver). Start main: %lu", ros::WallTime::now().toNSec());
   ros::init(argc, argv, "map_saver");
   std::string mapname = "map";
   int threshold_occupied = 100;
@@ -215,7 +215,7 @@ int main(int argc, char** argv)
   while(!mg.saved_map_ && ros::ok())
     ros::spinOnce();
 
-  ROS_ERROR("ROSTIMER (map_saver). End main: %f.%lu", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (map_saver). End main: %lu", ros::WallTime::now().toNSec());
   return 0;
 }
 
