@@ -285,7 +285,7 @@ void sigintHandler(int sig)
 int
 main(int argc, char** argv)
 {
-  ROS_ERROR("ROSTIMER. Start main: %i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start main: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
   ros::init(argc, argv, "amcl");
   ros::NodeHandle nh;
 
@@ -309,7 +309,7 @@ main(int argc, char** argv)
   amcl_node_ptr.reset();
 
   // To quote Morgan, Hooray!
-  ROS_ERROR("ROSTIMER. End main: %i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End main: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
   return(0);
 }
 
@@ -786,7 +786,7 @@ AmclNode::requestMap()
 void
 AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
 {
-  ROS_ERROR("ROSTIMER. Start mapReceived: %i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start mapReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
   if( first_map_only_ && first_map_received_ ) {
     return;
   }
@@ -794,7 +794,7 @@ AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
   handleMapMessage( *msg );
 
   first_map_received_ = true;
-  ROS_ERROR("ROSTIMER. End mapReceived:%i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End mapReceived:%u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
 }
 
 void
@@ -1432,9 +1432,9 @@ AmclNode::getYaw(tf::Pose& t)
 void
 AmclNode::initialPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg)
 {
-  ROS_ERROR("ROSTIMER. Start initialPoseReceived: %i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). Start initialPoseReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
   handleInitialPoseMessage(*msg);
-  ROS_ERROR("ROSTIMER. End initialPoseReceived: %i.%i", ros::WallTime::now().toSec(), ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End initialPoseReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());
 }
 
 void
