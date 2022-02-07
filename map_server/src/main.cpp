@@ -233,6 +233,7 @@ class MapServer
 
 int main(int argc, char **argv)
 {
+  ROS_ERROR("ROSTIMER. Start main: %i.%i", ros::Time::now().toSec(), ros::Time::now().toNSec());
   ros::init(argc, argv, "map_server", ros::init_options::AnonymousName);
   if(argc != 3 && argc != 2)
   {
