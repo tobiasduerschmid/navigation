@@ -285,7 +285,7 @@ void sigintHandler(int sig)
 int
 main(int argc, char** argv)
 {
-  ROS_DEBUG("ROSTIMER. Start main: %f", ros::WallTime::now());
+  ROS_ERROR("ROSTIMER. Start main: %f", ros::WallTime::now());
   ros::init(argc, argv, "amcl");
   ros::NodeHandle nh;
 
@@ -309,7 +309,7 @@ main(int argc, char** argv)
   amcl_node_ptr.reset();
 
   // To quote Morgan, Hooray!
-  ROS_DEBUG("ROSTIMER. End main: %f", ros::WallTime::now());
+  ROS_ERROR("ROSTIMER. End main: %f", ros::WallTime::now());
   return(0);
 }
 
@@ -786,6 +786,7 @@ AmclNode::requestMap()
 void
 AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
 {
+  ROS_ERROR("ROSTIMER. Start mapReceived: %f", ros::WallTime::now());
   if( first_map_only_ && first_map_received_ ) {
     return;
   }
@@ -793,6 +794,7 @@ AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
   handleMapMessage( *msg );
 
   first_map_received_ = true;
+  ROS_ERROR("ROSTIMER. End mapReceived: %f", ros::WallTime::now());
 }
 
 void
@@ -1430,7 +1432,9 @@ AmclNode::getYaw(tf::Pose& t)
 void
 AmclNode::initialPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg)
 {
+  ROS_ERROR("ROSTIMER. Start initialPoseReceived: %f", ros::WallTime::now());
   handleInitialPoseMessage(*msg);
+  ROS_ERROR("ROSTIMER. End initialPoseReceived: %f", ros::WallTime::now());
 }
 
 void
