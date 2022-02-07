@@ -1047,8 +1047,10 @@ AmclNode::setMapCallback(nav_msgs::SetMap::Request& req,
 void
 AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
 {
+  ROS_ERROR("ROSTIMER (amcl). Start laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
   last_laser_received_ts_ = ros::Time::now();
   if( map_ == NULL ) {
+    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
     return;
   }
   boost::recursive_mutex::scoped_lock lr(configuration_mutex_);
@@ -1076,6 +1078,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
                 "even though the message notifier is in use",
                 laser_scan->header.frame_id.c_str(),
                 base_frame_id_.c_str());
+      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
       return;
     }
 
@@ -1102,6 +1105,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
                   laser_scan->header.stamp, base_frame_id_))
   {
     ROS_ERROR("Couldn't determine robot's pose associated with laser scan");
+    ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
     return;
   }
 
@@ -1194,6 +1198,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
     {
       ROS_WARN("Unable to transform min/max laser angles into base frame: %s",
                e.what());
+      ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec());                
       return;
     }
 
@@ -1370,6 +1375,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
       catch(tf::TransformException)
       {
         ROS_DEBUG("Failed to subtract base to odom transform");
+        ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
         return;
       }
 
@@ -1418,6 +1424,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
       save_pose_last_time = now;
     }
   }
+  ROS_ERROR("ROSTIMER (amcl). End laserReceived: %u.%u", ros::WallTime::now().toNSec(), ros::WallTime::now().toSec()); 
 
 }
 
