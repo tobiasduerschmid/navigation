@@ -1439,7 +1439,7 @@ AmclNode::getYaw(tf::Pose& t)
 void
 AmclNode::initialPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg)
 {
-  ROS_ERROR("ROSTIMER (amcl). Start initialPoseReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec()));
+  ROS_ERROR("ROSTIMER (amcl). Start initialPoseReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
   handleInitialPoseMessage(*msg);
   ROS_ERROR("ROSTIMER (amcl). End initialPoseReceived: %f.%lu", ros::Time::now().toSec(), ros::Time::now().toNSec());
 }
