@@ -794,7 +794,7 @@ AmclNode::mapReceived(const nav_msgs::OccupancyGridConstPtr& msg)
   handleMapMessage( *msg );
 
   first_map_received_ = true;
-  ROS_ERROR("ROSTIMER (amcl). End mapReceived:%lu", ros::WallTime::now().toNSec());
+  ROS_ERROR("ROSTIMER (amcl). End mapReceived: %lu", ros::WallTime::now().toNSec());
 }
 
 void
