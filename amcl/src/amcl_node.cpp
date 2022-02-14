@@ -435,6 +435,7 @@ AmclNode::AmclNode() :
                                                         *tf_, 
                                                         odom_frame_id_, 
                                                         100);
+  ROS_ERROR("Subscribed to scan topic.");
   laser_scan_filter_->registerCallback(boost::bind(&AmclNode::laserReceived,
                                                    this, _1));
   initial_pose_sub_ = nh_.subscribe("initialpose", 2, &AmclNode::initialPoseReceived, this);
@@ -1050,6 +1051,7 @@ AmclNode::laserReceived(const sensor_msgs::LaserScanConstPtr& laser_scan)
   ROS_ERROR("ROSTIMER (amcl). Start laserReceived: %lu", ros::WallTime::now().toNSec()); 
   last_laser_received_ts_ = ros::Time::now();
   if( map_ == NULL ) {
+    ROS_ERROR("ROSTIMER (amcl). map_ == NULL: %lu", ros::WallTime::now().toNSec()); 
     ROS_ERROR("ROSTIMER (amcl). End laserReceived: %lu", ros::WallTime::now().toNSec()); 
     return;
   }
